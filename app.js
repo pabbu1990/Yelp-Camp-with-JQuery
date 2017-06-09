@@ -11,8 +11,8 @@ var express = require("express"),
     localMongoose = require("passport-local-mongoose"),
     User = require("./models/user");
     
-//mongoose.connect("mongodb://localhost/yelp_camp");
-mongoose.connect("mongodb://kiran:yelpcamp@ds161890.mlab.com:61890/pabbu_yelpcamp");
+
+mongoose.connect(process.env.DATABASEURL);
 app.set("view engine", "ejs");
 var bodyParser = require("body-parser");
 
@@ -26,8 +26,6 @@ app.use(methodOverride("_method"));
         resave: false,
         saveUninitialized: false
     }));
-    
-
     
     app.use(passport.initialize());
     app.use(passport.session());
