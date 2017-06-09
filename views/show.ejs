@@ -1,0 +1,35 @@
+
+<% include partials/header%>
+<div class="container">
+<h1><%= campgrounds.name%></h1>
+<img src="<%=campgrounds.image%>">
+<p><strong>Added By: </strong> <%=campgrounds.author.username.toUpperCase()%></p>
+<div style="margin: 5px auto">
+<p><strong>Description: </strong> <%=campgrounds.description%></p>
+<% campgrounds.comments.forEach(function(comment){ %>
+<p><strong><%=comment.author.username.toUpperCase()%> </strong>: <%=comment.content%></p>
+<% }); %>
+</div>
+<form action="/campgrounds/<%= campgrounds._id%>" method = "POST" id = "tarea">
+    <div class="ui form">
+      <div class="field">
+        <label>Comment:</label>
+        <textarea rows="2" name="cont" ></textarea>
+      </div>
+  </div>
+
+    <button type="submit" class="ui button default">Add Comment</button>
+
+</form>
+<p></p>
+<a href = "/campgrounds/<%=campgrounds._id%>/edit" class="ui button default orange" id = "editButton">Edit</a>
+<a  style="align: center"href="/campgrounds" class="btn btn-primary" id = "cgButton">Back to Campgrounds</a>
+<p> </p>
+<form action = "/campgrounds/<%=campgrounds._id%>?_method=DELETE" method = "POST">
+<button class="ui button default red" type="submit" >Delete</button>
+</form>
+
+
+</div>
+
+<% include partials/footer%>
