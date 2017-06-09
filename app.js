@@ -6,6 +6,7 @@ var express = require("express"),
     Campground = require("./models/campground"),
     Comment =  require("./models/comment"),
     seedDB = require("./seeds"),
+    flash = require("connect-flash"),
     passport = require("passport"),
     localAuth = require("passport-local"),
     localMongoose = require("passport-local-mongoose"),
@@ -18,6 +19,7 @@ var bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
+app.use(flash());
 
 
 
@@ -37,6 +39,8 @@ app.use(methodOverride("_method"));
     
     app.use(function(req, res, next){
     res.locals.currentUser = req.user;
+    res.locals.oopss = req.flash("oops");
+    res.locals.success = req.flash("success");
     next();
     })
 
@@ -151,7 +155,7 @@ app.delete("/campgrounds/:id", isLoggedIn, function(req, res){
             }
             else
             {
-                console.log("you can only delete the campgrounds you added");
+                req.flash("oops", "You can only delete the campground you added!!");
                 res.redirect("/campgrounds/"+req.params.id);
             }
         }
@@ -210,12 +214,14 @@ function isLoggedIn(req, res, next)
     if(req.isAuthenticated()){
         return next();
     }
+    req.flash("oops", "Please login!");
     res.redirect("/login");
 }
 
 // LOGOUT ROUTE
 app.get("/logout", function(req, res){
     req.logout();
+    req.flash("success", "You have successfully logged out");
     res.redirect("/login");
 })
 
