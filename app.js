@@ -13,8 +13,8 @@ var express = require("express"),
     User = require("./models/user");
     
 
-mongoose.connect(process.env.DATABASEURL);
-//mongoose.connect("mongodb://kiran:yelpcamp@ds161890.mlab.com:61890/pabbu_yelpcamp");
+//mongoose.connect(process.env.DATABASEURL);
+mongoose.connect("mongodb://kiran:yelpcamp@ds161890.mlab.com:61890/pabbu_yelpcamp");
 app.set("view engine", "ejs");
 var bodyParser = require("body-parser");
 
